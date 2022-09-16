@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:alpaca_markets/alpaca_markets.dart';
@@ -102,5 +103,26 @@ void main() {
         watchlist?.assets[0].symbol == "GRMN" ||
             watchlist?.assets[1].symbol == "GRMN",
         true);
+  });
+
+  test('Evaluate calendar', () async {
+    AlpacaMarkets am = AlpacaMarkets(
+        paperApacApiKeyId: getApcaApiKeyId(),
+        paperApcaApiSecretKey: getApcaApiSecretKey());
+    DateTime dateTime = DateTime(2022, 9, 16);
+    // Perform request for a single date
+    Calendar? calendar = await am.getCalendarDate(dateTime);
+    expect(calendar, isNot(null));
+    if (calendar != null) {
+      expect(calendar.date.year, dateTime.year);
+      expect(calendar.date.month, dateTime.month);
+      expect(calendar.date.day, dateTime.day);
+      expect(calendar.open, const TimeOfDay(hour: 9, minute: 30));
+      expect(calendar.close, const TimeOfDay(hour: 16, minute: 0));
+    }
+    // Perform a request for a date range
+    List<Calendar>? calendars = await am.getCalendarDates(
+        start: dateTime.subtract(const Duration(days: 6)), end: dateTime);
+    expect(calendars?.length, 5);
   });
 }

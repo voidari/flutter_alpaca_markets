@@ -1,6 +1,6 @@
 library alpaca_markets;
 
-import 'package:alpaca_markets/alpaca_markets.dart';
+import 'package:alpaca_markets/src/models/asset.dart';
 
 /// Each watchlist is an ordered list of assets, accessed by the
 /// name or ID of the entitiy.

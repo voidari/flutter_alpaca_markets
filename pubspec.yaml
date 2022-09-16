@@ -1,8 +1,8 @@
 name: alpaca_markets
 description: A wrapper for the Alpaca Markets broker, trading, and market data APIs.
 version: 0.0.1
-repository: https://github.com/voidari/flutter/tree/main/alpaca_markets
-issue_tracker: https://github.com/voidari/flutter/labels/alpaca%20markets
+repository: https://github.com/voidari/flutter_alpaca_markets
+issue_tracker: https://github.com/voidari/flutter_alpaca_markets/issues
 
 environment:
   sdk: '>=2.18.0 <3.0.0'

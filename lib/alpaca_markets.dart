@@ -2,14 +2,17 @@ library alpaca_markets;
 
 import 'package:alpaca_markets/src/managers/account_manager.dart';
 import 'package:alpaca_markets/src/managers/asset_manager.dart';
+import 'package:alpaca_markets/src/managers/calendar_manager.dart';
 import 'package:alpaca_markets/src/managers/watchlist_manager.dart';
 import 'package:alpaca_markets/src/models/account.dart';
 import 'package:alpaca_markets/src/models/asset.dart';
+import 'package:alpaca_markets/src/models/calendar.dart';
 import 'package:alpaca_markets/src/models/watchlist.dart';
 import 'package:alpaca_markets/src/request_builder.dart';
 
 export './src/models/account.dart';
 export './src/models/asset.dart';
+export './src/models/calendar.dart';
 export './src/models/watchlist.dart';
 
 /// Provides a means to trade with Alpaca's brokerage service,
@@ -155,5 +158,22 @@ class AlpacaMarkets {
   Future<void> deleteWatchlistSymbol(String watchlistId, String symbol) async {
     await WatchlistManager.deleteWatchlistSymbol(
         _requestBuilder, watchlistId, symbol);
+  }
+
+  /// Retrieves a market calendar for the specified [date]. If the date
+  /// falls on a date that the market is not open, it will return the next
+  /// date the market is open.
+  /// Returns a calendar or null.
+  Future<Calendar?> getCalendarDate(DateTime date) async {
+    return await CalendarManager.getDate(_requestBuilder, date);
+  }
+
+  /// Retrives a list of market calendars from provided [start],
+  /// or 1970 if not provided, to the provided [end], or 2029 if not provided.
+  /// Returns the list of calendars.
+  Future<List<Calendar>?> getCalendarDates(
+      {DateTime? start, DateTime? end}) async {
+    return await CalendarManager.getDates(_requestBuilder,
+        start: start, end: end);
   }
 }
