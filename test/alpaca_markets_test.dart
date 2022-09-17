@@ -125,4 +125,11 @@ void main() {
         start: dateTime.subtract(const Duration(days: 6)), end: dateTime);
     expect(calendars?.length, 5);
   });
+
+  test('Evaluate clock', () async {
+    AlpacaMarkets am = AlpacaMarkets(
+        paperApacApiKeyId: getApcaApiKeyId(),
+        paperApcaApiSecretKey: getApcaApiSecretKey());
+    expect(await am.getMarketClock(), isNot(null));
+  });
 }

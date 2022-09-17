@@ -62,3 +62,18 @@ await am.deleteWatchlist(watchlist?.id);
 // Delete all watchlists
 await am.deleteAllWatchlists();
 ```
+
+#### Calendar and market clock
+
+The calendar API provides a way to request a range of dates that the market is open for, with the date, open, and close timestamps.
+The market clock is the current time, whether the market is open, when the market opens next, and when the market closes next.
+
+```dart
+/// Retrieve a specific date
+Calendar? calendar = await am.getCalendarDate(const DateTime(2022, 11, 1));
+/// Retrieves a range of dates
+List<Calendar>? calendars = await am.getCalendarDates(
+    start: const DateTime(2022, 10, 25), end: const DateTime(2022, 10, 31));
+/// Retrieve the market clock
+Clock? clock = await am.getMarketClock();
+```

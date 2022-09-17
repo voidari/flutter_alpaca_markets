@@ -3,16 +3,19 @@ library alpaca_markets;
 import 'package:alpaca_markets/src/managers/account_manager.dart';
 import 'package:alpaca_markets/src/managers/asset_manager.dart';
 import 'package:alpaca_markets/src/managers/calendar_manager.dart';
+import 'package:alpaca_markets/src/managers/clock_manager.dart';
 import 'package:alpaca_markets/src/managers/watchlist_manager.dart';
 import 'package:alpaca_markets/src/models/account.dart';
 import 'package:alpaca_markets/src/models/asset.dart';
 import 'package:alpaca_markets/src/models/calendar.dart';
+import 'package:alpaca_markets/src/models/clock.dart';
 import 'package:alpaca_markets/src/models/watchlist.dart';
 import 'package:alpaca_markets/src/request_builder.dart';
 
 export './src/models/account.dart';
 export './src/models/asset.dart';
 export './src/models/calendar.dart';
+export './src/models/clock.dart';
 export './src/models/watchlist.dart';
 
 /// Provides a means to trade with Alpaca's brokerage service,
@@ -175,5 +178,10 @@ class AlpacaMarkets {
       {DateTime? start, DateTime? end}) async {
     return await CalendarManager.getDates(_requestBuilder,
         start: start, end: end);
+  }
+
+  /// Retrieves the market clock for the current date/time.
+  Future<Clock?> getMarketClock() async {
+    return await ClockManager.getMarketClock(_requestBuilder);
   }
 }
