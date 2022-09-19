@@ -1,6 +1,11 @@
 # Alpaca Markets
 
 [![pub package](https://img.shields.io/pub/v/alpaca_markets.svg)](https://pub.dev/packages/alpaca_markets)
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
 
 A wrapper for the Alpaca Markets trading APIs. Provides an easy dart-specific way of working with the broker, trading, and market data requests.
 
@@ -77,3 +82,16 @@ List<Calendar>? calendars = await am.getCalendarDates(
 /// Retrieve the market clock
 Clock? clock = await am.getMarketClock();
 ```
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/voidari/flutter_alpaca_markets.svg?style=for-the-badge
+[contributors-url]: https://github.com/voidari/flutter_alpaca_markets/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/voidari/flutter_alpaca_markets.svg?style=for-the-badge
+[forks-url]: https://github.com/voidari/flutter_alpaca_markets/network/members
+[stars-shield]: https://img.shields.io/github/stars/voidari/flutter_alpaca_markets.svg?style=for-the-badge
+[stars-url]: https://github.com/voidari/flutter_alpaca_markets/stargazers
+[issues-shield]: https://img.shields.io/github/issues/voidari/flutter_alpaca_markets.svg?style=for-the-badge
+[issues-url]: https://github.com/voidari/flutter_alpaca_markets/issues
+[license-shield]: https://img.shields.io/github/license/voidari/flutter_alpaca_markets.svg?style=for-the-badge
+[license-url]: https://github.com/voidari/flutter_alpaca_markets/blob/main/LICENSE
