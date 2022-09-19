@@ -23,8 +23,8 @@ class Clock {
   /// The constructor of the clock.
   Clock(this.timestamp, this.isOpen, this.nextOpen, this.nextClose);
 
-  /// Constructs a clock from the provided JSON data.
-  static Clock? fromJson(Map<String, dynamic> json) {
+  /// Constructs a clock from the provided map.
+  static Clock? fromMap(Map<String, dynamic> json) {
     try {
       DateTime timestamp = DateTime.parse(json[_jsonKeyTimestamp]!);
       bool isOpen = json[_jsonKeyIsOpen]!;
@@ -36,8 +36,8 @@ class Clock {
     }
   }
 
-  /// Creates a JSON object given the current clock data
-  Map<String, dynamic> toJson() {
+  /// Creates a map given the current clock data
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> json = {};
     json.putIfAbsent(_jsonKeyTimestamp, () => timestamp.toUtc().toString());
     json.putIfAbsent(_jsonKeyIsOpen, () => isOpen);

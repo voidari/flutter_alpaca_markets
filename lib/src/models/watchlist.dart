@@ -34,8 +34,8 @@ class Watchlist {
   Watchlist(this.id, this.createdAt, this.updatedAt, this.name, this.accountId,
       this.assets);
 
-  /// Constructs a watchlist from the provided JSON data.
-  static Watchlist? fromJson(Map<String, dynamic> json) {
+  /// Constructs a watchlist from the provided map.
+  static Watchlist? fromMap(Map<String, dynamic> json) {
     try {
       String id = json[_jsonKeyId]!;
       DateTime createdAt = DateTime.parse(json[_jsonKeyCreatedAt]!);
@@ -45,7 +45,7 @@ class Watchlist {
       List<Asset> assets = <Asset>[];
       if (json.containsKey(_jsonKeyAssets)) {
         for (dynamic jsonAsset in json[_jsonKeyAssets]) {
-          Asset? asset = Asset.fromJson(jsonAsset);
+          Asset? asset = Asset.fromMap(jsonAsset);
           if (asset != null) {
             assets.add(asset);
           }
@@ -57,8 +57,8 @@ class Watchlist {
     }
   }
 
-  /// Creates a JSON object given the current watchlist data
-  Map<String, dynamic> toJson() {
+  /// Creates a map given the current watchlist data
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> json = {};
     json.putIfAbsent(_jsonKeyId, () => id);
     json.putIfAbsent(_jsonKeyCreatedAt, () => createdAt.toUtc().toString());
@@ -68,7 +68,7 @@ class Watchlist {
     if (assets.isNotEmpty) {
       List<dynamic> assetList = <dynamic>[];
       for (Asset asset in assets) {
-        assetList.add(asset.toJson());
+        assetList.add(asset.toMap());
       }
       json.putIfAbsent(_jsonKeyAssets, () => assetList);
     }

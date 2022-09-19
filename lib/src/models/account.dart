@@ -196,8 +196,8 @@ class Account {
       this.daytradingBuyingPower,
       this.regtBuyingPower);
 
-  /// Constructs an asset from the provided JSON data.
-  static Account? fromJson(Map<String, dynamic> json) {
+  /// Constructs an asset from the provided map.
+  static Account? fromMap(Map<String, dynamic> json) {
     try {
       String id = json[_jsonKeyId]!;
       String accountNumber = json[_jsonKeyAccountNumber]!;
@@ -258,8 +258,8 @@ class Account {
     }
   }
 
-  /// Creates a JSON object given the current asset data
-  Map<String, dynamic> toJson() {
+  /// Creates a map given the current asset data
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> json = {};
     json.putIfAbsent(_jsonKeyId, () => id);
     json.putIfAbsent(_jsonKeyAccountNumber, () => accountNumber);

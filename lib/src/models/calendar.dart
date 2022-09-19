@@ -21,8 +21,8 @@ class Calendar {
   /// The constructor of the calendar
   Calendar(this.date, this.open, this.close);
 
-  /// Constructs a calendar from the provided JSON data.
-  static Calendar? fromJson(Map<String, dynamic> json) {
+  /// Constructs a calendar from the provided map.
+  static Calendar? fromMap(Map<String, dynamic> json) {
     try {
       DateTime date = DateTime.parse(json[_jsonKeyDate]!);
       TimeOfDay open = TimeOfDay(
@@ -37,8 +37,8 @@ class Calendar {
     }
   }
 
-  /// Creates a JSON object given the current calendar data
-  Map<String, dynamic> toJson() {
+  /// Creates a map given the current calendar data
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> json = {};
     json.putIfAbsent(_jsonKeyDate, () => date.toUtc().toString());
     json.putIfAbsent(_jsonKeyOpen, () => open.toString());

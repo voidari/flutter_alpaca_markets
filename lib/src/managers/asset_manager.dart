@@ -34,7 +34,7 @@ class AssetsManager {
     }
     dynamic json = jsonDecode(response.body);
     for (dynamic jsonAsset in json) {
-      Asset? asset = Asset.fromJson(jsonAsset);
+      Asset? asset = Asset.fromMap(jsonAsset);
       if (asset != null) {
         assets.add(asset);
       }
@@ -50,6 +50,6 @@ class AssetsManager {
       return null;
     }
     dynamic json = jsonDecode(response.body);
-    return Asset.fromJson(json);
+    return Asset.fromMap(json);
   }
 }

@@ -44,7 +44,7 @@ class CalendarManager {
     dynamic json = jsonDecode(response.body);
     List<Calendar> calendars = <Calendar>[];
     for (dynamic jsonCalendar in json) {
-      Calendar? calendar = Calendar.fromJson(jsonCalendar);
+      Calendar? calendar = Calendar.fromMap(jsonCalendar);
       if (calendar != null) {
         calendars.add(calendar);
       }

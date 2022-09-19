@@ -19,7 +19,7 @@ class WatchlistManager {
     dynamic json = jsonDecode(response.body);
     List<Watchlist> watchlists = <Watchlist>[];
     for (dynamic jsonWatchlist in json) {
-      Watchlist? watchlist = Watchlist.fromJson(jsonWatchlist);
+      Watchlist? watchlist = Watchlist.fromMap(jsonWatchlist);
       if (watchlist == null) {
         continue;
       }
@@ -45,7 +45,7 @@ class WatchlistManager {
       return null;
     }
     dynamic json = jsonDecode(response.body);
-    return Watchlist.fromJson(json);
+    return Watchlist.fromMap(json);
   }
 
   /// Create a new watchlist with the provided [name] and optionally with
@@ -67,7 +67,7 @@ class WatchlistManager {
       return null;
     }
     dynamic json = jsonDecode(response.body);
-    return Watchlist.fromJson(json);
+    return Watchlist.fromMap(json);
   }
 
   /// Update the name with [name] and/or content of watchlist with new [symbols]
@@ -94,7 +94,7 @@ class WatchlistManager {
       return null;
     }
     dynamic json = jsonDecode(response.body);
-    return Watchlist.fromJson(json);
+    return Watchlist.fromMap(json);
   }
 
   /// Adds the [symbol] asset to the watchlist matching the [watchlistId].
@@ -109,7 +109,7 @@ class WatchlistManager {
       return null;
     }
     dynamic json = jsonDecode(response.body);
-    return Watchlist.fromJson(json);
+    return Watchlist.fromMap(json);
   }
 
   /// Perform a delete of all watchlists.

@@ -92,8 +92,8 @@ class Asset {
     return status == "active";
   }
 
-  /// Constructs an asset from the provided JSON data.
-  static Asset? fromJson(Map<String, dynamic> json) {
+  /// Constructs an asset from the provided map.
+  static Asset? fromMap(Map<String, dynamic> json) {
     // Parse the ID
     if (!json.containsKey(_jsonKeyId)) {
       return null;
@@ -189,8 +189,8 @@ class Asset {
         maintenanceMarginRequirement);
   }
 
-  /// Creates a JSON object given the current asset data
-  Map<String, dynamic> toJson() {
+  /// Creates a map given the current asset data
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> json = {};
     json.putIfAbsent(_jsonKeyId, () => id);
     json.putIfAbsent(_jsonKeyClass, () => assetClass);

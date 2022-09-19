@@ -16,6 +16,6 @@ class AccountManager {
       return null;
     }
     dynamic json = jsonDecode(response.body);
-    return Account.fromJson(json);
+    return Account.fromMap(json);
   }
 }

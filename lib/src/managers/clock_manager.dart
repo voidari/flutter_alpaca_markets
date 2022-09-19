@@ -16,6 +16,6 @@ class ClockManager {
       return null;
     }
     dynamic json = jsonDecode(response.body);
-    return Clock.fromJson(json);
+    return Clock.fromMap(json);
   }
 }

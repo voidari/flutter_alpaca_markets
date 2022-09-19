@@ -21,7 +21,7 @@ void main() {
     Account? account = await am.getAccount();
     expect(account, isNot(null));
     if (account != null) {
-      expect(account.toJson(), Account.fromJson(account.toJson())?.toJson());
+      expect(account.toMap(), Account.fromMap(account.toMap())?.toMap());
     }
   });
 
