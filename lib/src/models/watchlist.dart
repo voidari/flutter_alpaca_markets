@@ -5,12 +5,12 @@ import 'package:alpaca_markets/src/models/asset.dart';
 /// Each watchlist is an ordered list of assets, accessed by the
 /// name or ID of the entitiy.
 class Watchlist {
-  static const String _jsonKeyId = "id";
-  static const String _jsonKeyCreatedAt = "created_at";
-  static const String _jsonKeyUpdatedAt = "updated_at";
-  static const String _jsonKeyName = "name";
-  static const String _jsonKeyAccountId = "account_id";
-  static const String _jsonKeyAssets = "assets";
+  static const String _keyId = "id";
+  static const String _keyCreatedAt = "created_at";
+  static const String _keyUpdatedAt = "updated_at";
+  static const String _keyName = "name";
+  static const String _keyAccountId = "account_id";
+  static const String _keyAssets = "assets";
 
   /// Watchlist ID
   final String id;
@@ -35,17 +35,17 @@ class Watchlist {
       this.assets);
 
   /// Constructs a watchlist from the provided map.
-  static Watchlist? fromMap(Map<String, dynamic> json) {
+  static Watchlist? fromMap(Map<String, dynamic> map) {
     try {
-      String id = json[_jsonKeyId]!;
-      DateTime createdAt = DateTime.parse(json[_jsonKeyCreatedAt]!);
-      DateTime updatedAt = DateTime.parse(json[_jsonKeyUpdatedAt]!);
-      String name = json[_jsonKeyName]!;
-      String accountId = json[_jsonKeyAccountId]!;
+      String id = map[_keyId]!;
+      DateTime createdAt = DateTime.parse(map[_keyCreatedAt]!);
+      DateTime updatedAt = DateTime.parse(map[_keyUpdatedAt]!);
+      String name = map[_keyName]!;
+      String accountId = map[_keyAccountId]!;
       List<Asset> assets = <Asset>[];
-      if (json.containsKey(_jsonKeyAssets)) {
-        for (dynamic jsonAsset in json[_jsonKeyAssets]) {
-          Asset? asset = Asset.fromMap(jsonAsset);
+      if (map.containsKey(_keyAssets)) {
+        for (dynamic mapAsset in map[_keyAssets]) {
+          Asset? asset = Asset.fromMap(mapAsset);
           if (asset != null) {
             assets.add(asset);
           }
@@ -59,19 +59,19 @@ class Watchlist {
 
   /// Creates a map given the current watchlist data
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> json = {};
-    json.putIfAbsent(_jsonKeyId, () => id);
-    json.putIfAbsent(_jsonKeyCreatedAt, () => createdAt.toUtc().toString());
-    json.putIfAbsent(_jsonKeyUpdatedAt, () => updatedAt.toUtc().toString());
-    json.putIfAbsent(_jsonKeyName, () => name);
-    json.putIfAbsent(_jsonKeyAccountId, () => accountId);
+    Map<String, dynamic> map = {};
+    map.putIfAbsent(_keyId, () => id);
+    map.putIfAbsent(_keyCreatedAt, () => createdAt.toUtc().toString());
+    map.putIfAbsent(_keyUpdatedAt, () => updatedAt.toUtc().toString());
+    map.putIfAbsent(_keyName, () => name);
+    map.putIfAbsent(_keyAccountId, () => accountId);
     if (assets.isNotEmpty) {
       List<dynamic> assetList = <dynamic>[];
       for (Asset asset in assets) {
         assetList.add(asset.toMap());
       }
-      json.putIfAbsent(_jsonKeyAssets, () => assetList);
+      map.putIfAbsent(_keyAssets, () => assetList);
     }
-    return json;
+    return map;
   }
 }

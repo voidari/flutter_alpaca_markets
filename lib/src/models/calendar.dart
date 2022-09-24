@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 /// Contains the specific open and close times for the market days, taking into
 /// account early closures.
 class Calendar {
-  static const String _jsonKeyDate = "date";
-  static const String _jsonKeyOpen = "open";
-  static const String _jsonKeyClose = "close";
+  static const String _keyDate = "date";
+  static const String _keyOpen = "open";
+  static const String _keyClose = "close";
 
   /// The date being described.
   final DateTime date;
@@ -22,15 +22,15 @@ class Calendar {
   Calendar(this.date, this.open, this.close);
 
   /// Constructs a calendar from the provided map.
-  static Calendar? fromMap(Map<String, dynamic> json) {
+  static Calendar? fromMap(Map<String, dynamic> map) {
     try {
-      DateTime date = DateTime.parse(json[_jsonKeyDate]!);
+      DateTime date = DateTime.parse(map[_keyDate]!);
       TimeOfDay open = TimeOfDay(
-          hour: int.parse(json[_jsonKeyOpen]!.split(":")[0]),
-          minute: int.parse(json[_jsonKeyOpen]!.split(":")[1]));
+          hour: int.parse(map[_keyOpen]!.split(":")[0]),
+          minute: int.parse(map[_keyOpen]!.split(":")[1]));
       TimeOfDay close = TimeOfDay(
-          hour: int.parse(json[_jsonKeyClose]!.split(":")[0]),
-          minute: int.parse(json[_jsonKeyClose]!.split(":")[1]));
+          hour: int.parse(map[_keyClose]!.split(":")[0]),
+          minute: int.parse(map[_keyClose]!.split(":")[1]));
       return Calendar(date, open, close);
     } catch (error) {
       return null;
@@ -39,10 +39,10 @@ class Calendar {
 
   /// Creates a map given the current calendar data
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> json = {};
-    json.putIfAbsent(_jsonKeyDate, () => date.toUtc().toString());
-    json.putIfAbsent(_jsonKeyOpen, () => open.toString());
-    json.putIfAbsent(_jsonKeyClose, () => close.toString());
-    return json;
+    Map<String, dynamic> map = {};
+    map.putIfAbsent(_keyDate, () => date.toUtc().toString());
+    map.putIfAbsent(_keyOpen, () => open.toString());
+    map.putIfAbsent(_keyClose, () => close.toString());
+    return map;
   }
 }

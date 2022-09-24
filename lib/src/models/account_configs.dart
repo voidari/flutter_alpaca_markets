@@ -4,13 +4,13 @@ library alpaca_markets;
 /// These configurations control allow you to modify settings to suit your
 /// trading needs.
 class AccountConfigs {
-  static const String _jsonKeyDtbpCheck = "dtbp_check";
-  static const String _jsonKeyTradeConfirmEmail = "trade_confirm_email";
-  static const String _jsonKeySuspendTrade = "suspend_trade";
-  static const String _jsonKeyNoShorting = "no_shorting";
-  static const String _jsonKeyFractionalTrading = "fractional_trading";
-  static const String _jsonKeyMaxMarginMultiplier = "max_margin_multiplier";
-  static const String _jsonKeyPdtCheck = "pdt_check";
+  static const String _keyDtbpCheck = "dtbp_check";
+  static const String _keyTradeConfirmEmail = "trade_confirm_email";
+  static const String _keySuspendTrade = "suspend_trade";
+  static const String _keyNoShorting = "no_shorting";
+  static const String _keyFractionalTrading = "fractional_trading";
+  static const String _keyMaxMarginMultiplier = "max_margin_multiplier";
+  static const String _keyPdtCheck = "pdt_check";
 
   /// 'both', 'entry', or 'exit'.
   /// Controls Day Trading Margin Call (DTMC) checks.
@@ -54,15 +54,15 @@ class AccountConfigs {
       this.pdtCheck);
 
   /// Constructs an account configs from the provided map.
-  static AccountConfigs? fromMap(Map<String, dynamic> json) {
+  static AccountConfigs? fromMap(Map<String, dynamic> map) {
     try {
-      String dtbpCheck = json[_jsonKeyDtbpCheck]!;
-      String tradeConfirmEmail = json[_jsonKeyTradeConfirmEmail];
-      bool suspendTrade = json[_jsonKeySuspendTrade];
-      bool noShorting = json[_jsonKeyNoShorting];
-      bool fractionalTrading = json[_jsonKeyFractionalTrading];
-      String maxMarginMultiplier = json[_jsonKeyMaxMarginMultiplier];
-      String pdtCheck = json[_jsonKeyPdtCheck];
+      String dtbpCheck = map[_keyDtbpCheck]!;
+      String tradeConfirmEmail = map[_keyTradeConfirmEmail];
+      bool suspendTrade = map[_keySuspendTrade];
+      bool noShorting = map[_keyNoShorting];
+      bool fractionalTrading = map[_keyFractionalTrading];
+      String maxMarginMultiplier = map[_keyMaxMarginMultiplier];
+      String pdtCheck = map[_keyPdtCheck];
       return AccountConfigs(dtbpCheck, tradeConfirmEmail, suspendTrade,
           noShorting, fractionalTrading, maxMarginMultiplier, pdtCheck);
     } catch (error) {
@@ -72,14 +72,14 @@ class AccountConfigs {
 
   /// Creates a map given the current account configs data
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> json = {};
-    json.putIfAbsent(_jsonKeyDtbpCheck, () => dtbpCheck);
-    json.putIfAbsent(_jsonKeyTradeConfirmEmail, () => tradeConfirmEmail);
-    json.putIfAbsent(_jsonKeySuspendTrade, () => suspendTrade);
-    json.putIfAbsent(_jsonKeyNoShorting, () => noShorting);
-    json.putIfAbsent(_jsonKeyFractionalTrading, () => fractionalTrading);
-    json.putIfAbsent(_jsonKeyMaxMarginMultiplier, () => maxMarginMultiplier);
-    json.putIfAbsent(_jsonKeyPdtCheck, () => pdtCheck);
-    return json;
+    Map<String, dynamic> map = {};
+    map.putIfAbsent(_keyDtbpCheck, () => dtbpCheck);
+    map.putIfAbsent(_keyTradeConfirmEmail, () => tradeConfirmEmail);
+    map.putIfAbsent(_keySuspendTrade, () => suspendTrade);
+    map.putIfAbsent(_keyNoShorting, () => noShorting);
+    map.putIfAbsent(_keyFractionalTrading, () => fractionalTrading);
+    map.putIfAbsent(_keyMaxMarginMultiplier, () => maxMarginMultiplier);
+    map.putIfAbsent(_keyPdtCheck, () => pdtCheck);
+    return map;
   }
 }

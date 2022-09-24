@@ -36,32 +36,32 @@ enum AccountStatus {
 /// for withdrawal, and various flags relevant to an account’s ability
 /// to trade.
 class Account {
-  static const String _jsonKeyId = "id";
-  static const String _jsonKeyAccountNumber = "account_number";
-  static const String _jsonKeyStatus = "status";
-  static const String _jsonKeyCurrency = "currency";
-  static const String _jsonKeyCash = "cash";
-  static const String _jsonKeyPortfolioValue = "portfolio_value";
-  static const String _jsonKeyPatternDayTrader = "pattern_day_trader";
-  static const String _jsonKeyTradeSuspendedByUser = "trade_suspended_by_user";
-  static const String _jsonKeyTradingBlocked = "trading_blocked";
-  static const String _jsonKeyTransfersBlocked = "transfers_blocked";
-  static const String _jsonKeyAccountBlocked = "account_blocked";
-  static const String _jsonKeyCreatedAt = "created_at";
-  static const String _jsonKeyShortingEnabled = "shorting_enabled";
-  static const String _jsonKeyLongMarketValue = "long_market_value";
-  static const String _jsonKeyShortMarketValue = "short_market_value";
-  static const String _jsonKeyEquity = "equity";
-  static const String _jsonKeyLastEquity = "last_equity";
-  static const String _jsonKeyMultiplier = "multiplier";
-  static const String _jsonKeyBuyingPower = "buying_power";
-  static const String _jsonKeyInitialMargin = "initial_margin";
-  static const String _jsonKeyMaintenanceMargin = "maintenance_margin";
-  static const String _jsonKeySma = "sma";
-  static const String _jsonKeyDaytradeCount = "daytrade_count";
-  static const String _jsonKeyLastMaintenanceMargin = "last_maintenance_margin";
-  static const String _jsonKeyDayTradingBuyingPower = "daytrading_buying_power";
-  static const String _jsonKeyRegtBuyingPower = "regt_buying_power";
+  static const String _keyId = "id";
+  static const String _keyAccountNumber = "account_number";
+  static const String _keyStatus = "status";
+  static const String _keyCurrency = "currency";
+  static const String _keyCash = "cash";
+  static const String _keyPortfolioValue = "portfolio_value";
+  static const String _keyPatternDayTrader = "pattern_day_trader";
+  static const String _keyTradeSuspendedByUser = "trade_suspended_by_user";
+  static const String _keyTradingBlocked = "trading_blocked";
+  static const String _keyTransfersBlocked = "transfers_blocked";
+  static const String _keyAccountBlocked = "account_blocked";
+  static const String _keyCreatedAt = "created_at";
+  static const String _keyShortingEnabled = "shorting_enabled";
+  static const String _keyLongMarketValue = "long_market_value";
+  static const String _keyShortMarketValue = "short_market_value";
+  static const String _keyEquity = "equity";
+  static const String _keyLastEquity = "last_equity";
+  static const String _keyMultiplier = "multiplier";
+  static const String _keyBuyingPower = "buying_power";
+  static const String _keyInitialMargin = "initial_margin";
+  static const String _keyMaintenanceMargin = "maintenance_margin";
+  static const String _keySma = "sma";
+  static const String _keyDaytradeCount = "daytrade_count";
+  static const String _keyLastMaintenanceMargin = "last_maintenance_margin";
+  static const String _keyDayTradingBuyingPower = "daytrading_buying_power";
+  static const String _keyRegtBuyingPower = "regt_buying_power";
 
   /// Account ID.
   final String id;
@@ -197,34 +197,34 @@ class Account {
       this.regtBuyingPower);
 
   /// Constructs an asset from the provided map.
-  static Account? fromMap(Map<String, dynamic> json) {
+  static Account? fromMap(Map<String, dynamic> map) {
     try {
-      String id = json[_jsonKeyId]!;
-      String accountNumber = json[_jsonKeyAccountNumber]!;
-      AccountStatus status = _toAccountStatus(json[_jsonKeyStatus]!);
-      String currency = json[_jsonKeyCurrency]!;
-      String cash = json[_jsonKeyCash]!;
-      String portfolioValue = json[_jsonKeyPortfolioValue]!;
-      bool patternDayTrader = json[_jsonKeyPatternDayTrader]!;
-      bool tradeSuspendedByUser = json[_jsonKeyTradeSuspendedByUser]!;
-      bool tradingBlocked = json[_jsonKeyTradingBlocked]!;
-      bool transfersBlocked = json[_jsonKeyTransfersBlocked]!;
-      bool accountBlocked = json[_jsonKeyAccountBlocked]!;
-      DateTime createdAt = DateTime.parse(json[_jsonKeyCreatedAt]!);
-      bool shortingEnabled = json[_jsonKeyShortingEnabled]!;
-      String longMarketValue = json[_jsonKeyLongMarketValue]!;
-      String shortMarketValue = json[_jsonKeyShortMarketValue]!;
-      String equity = json[_jsonKeyEquity]!;
-      String lastEquity = json[_jsonKeyLastEquity]!;
-      String multiplier = json[_jsonKeyMultiplier]!;
-      String buyingPower = json[_jsonKeyBuyingPower]!;
-      String initialMargin = json[_jsonKeyInitialMargin]!;
-      String maintenanceMargin = json[_jsonKeyMaintenanceMargin]!;
-      String sma = json[_jsonKeySma]!;
-      int daytradeCount = json[_jsonKeyDaytradeCount]!;
-      String lastMaintenanceMargin = json[_jsonKeyLastMaintenanceMargin]!;
-      String daytradingBuyingPower = json[_jsonKeyDayTradingBuyingPower]!;
-      String regtBuyingPower = json[_jsonKeyRegtBuyingPower]!;
+      String id = map[_keyId]!;
+      String accountNumber = map[_keyAccountNumber]!;
+      AccountStatus status = _toAccountStatus(map[_keyStatus]!);
+      String currency = map[_keyCurrency]!;
+      String cash = map[_keyCash]!;
+      String portfolioValue = map[_keyPortfolioValue]!;
+      bool patternDayTrader = map[_keyPatternDayTrader]!;
+      bool tradeSuspendedByUser = map[_keyTradeSuspendedByUser]!;
+      bool tradingBlocked = map[_keyTradingBlocked]!;
+      bool transfersBlocked = map[_keyTransfersBlocked]!;
+      bool accountBlocked = map[_keyAccountBlocked]!;
+      DateTime createdAt = DateTime.parse(map[_keyCreatedAt]!);
+      bool shortingEnabled = map[_keyShortingEnabled]!;
+      String longMarketValue = map[_keyLongMarketValue]!;
+      String shortMarketValue = map[_keyShortMarketValue]!;
+      String equity = map[_keyEquity]!;
+      String lastEquity = map[_keyLastEquity]!;
+      String multiplier = map[_keyMultiplier]!;
+      String buyingPower = map[_keyBuyingPower]!;
+      String initialMargin = map[_keyInitialMargin]!;
+      String maintenanceMargin = map[_keyMaintenanceMargin]!;
+      String sma = map[_keySma]!;
+      int daytradeCount = map[_keyDaytradeCount]!;
+      String lastMaintenanceMargin = map[_keyLastMaintenanceMargin]!;
+      String daytradingBuyingPower = map[_keyDayTradingBuyingPower]!;
+      String regtBuyingPower = map[_keyRegtBuyingPower]!;
       // Create the account
       return Account(
           id,
@@ -260,36 +260,34 @@ class Account {
 
   /// Creates a map given the current asset data
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> json = {};
-    json.putIfAbsent(_jsonKeyId, () => id);
-    json.putIfAbsent(_jsonKeyAccountNumber, () => accountNumber);
-    json.putIfAbsent(_jsonKeyStatus, () => _fromAccountStatus(status));
-    json.putIfAbsent(_jsonKeyCurrency, () => currency);
-    json.putIfAbsent(_jsonKeyCash, () => cash);
-    json.putIfAbsent(_jsonKeyPortfolioValue, () => portfolioValue);
-    json.putIfAbsent(_jsonKeyPatternDayTrader, () => patternDayTrader);
-    json.putIfAbsent(_jsonKeyTradeSuspendedByUser, () => tradeSuspendedByUser);
-    json.putIfAbsent(_jsonKeyTradingBlocked, () => tradingBlocked);
-    json.putIfAbsent(_jsonKeyTransfersBlocked, () => transfersBlocked);
-    json.putIfAbsent(_jsonKeyAccountBlocked, () => accountBlocked);
-    json.putIfAbsent(_jsonKeyCreatedAt, () => createdAt.toUtc().toString());
-    json.putIfAbsent(_jsonKeyShortingEnabled, () => shortingEnabled);
-    json.putIfAbsent(_jsonKeyLongMarketValue, () => longMarketValue);
-    json.putIfAbsent(_jsonKeyShortMarketValue, () => shortMarketValue);
-    json.putIfAbsent(_jsonKeyEquity, () => equity);
-    json.putIfAbsent(_jsonKeyLastEquity, () => lastEquity);
-    json.putIfAbsent(_jsonKeyMultiplier, () => multiplier);
-    json.putIfAbsent(_jsonKeyBuyingPower, () => buyingPower);
-    json.putIfAbsent(_jsonKeyInitialMargin, () => initialMargin);
-    json.putIfAbsent(_jsonKeyMaintenanceMargin, () => maintenanceMargin);
-    json.putIfAbsent(_jsonKeySma, () => sma);
-    json.putIfAbsent(_jsonKeyDaytradeCount, () => daytradeCount);
-    json.putIfAbsent(
-        _jsonKeyLastMaintenanceMargin, () => lastMaintenanceMargin);
-    json.putIfAbsent(
-        _jsonKeyDayTradingBuyingPower, () => daytradingBuyingPower);
-    json.putIfAbsent(_jsonKeyRegtBuyingPower, () => regtBuyingPower);
-    return json;
+    Map<String, dynamic> map = {};
+    map.putIfAbsent(_keyId, () => id);
+    map.putIfAbsent(_keyAccountNumber, () => accountNumber);
+    map.putIfAbsent(_keyStatus, () => _fromAccountStatus(status));
+    map.putIfAbsent(_keyCurrency, () => currency);
+    map.putIfAbsent(_keyCash, () => cash);
+    map.putIfAbsent(_keyPortfolioValue, () => portfolioValue);
+    map.putIfAbsent(_keyPatternDayTrader, () => patternDayTrader);
+    map.putIfAbsent(_keyTradeSuspendedByUser, () => tradeSuspendedByUser);
+    map.putIfAbsent(_keyTradingBlocked, () => tradingBlocked);
+    map.putIfAbsent(_keyTransfersBlocked, () => transfersBlocked);
+    map.putIfAbsent(_keyAccountBlocked, () => accountBlocked);
+    map.putIfAbsent(_keyCreatedAt, () => createdAt.toUtc().toString());
+    map.putIfAbsent(_keyShortingEnabled, () => shortingEnabled);
+    map.putIfAbsent(_keyLongMarketValue, () => longMarketValue);
+    map.putIfAbsent(_keyShortMarketValue, () => shortMarketValue);
+    map.putIfAbsent(_keyEquity, () => equity);
+    map.putIfAbsent(_keyLastEquity, () => lastEquity);
+    map.putIfAbsent(_keyMultiplier, () => multiplier);
+    map.putIfAbsent(_keyBuyingPower, () => buyingPower);
+    map.putIfAbsent(_keyInitialMargin, () => initialMargin);
+    map.putIfAbsent(_keyMaintenanceMargin, () => maintenanceMargin);
+    map.putIfAbsent(_keySma, () => sma);
+    map.putIfAbsent(_keyDaytradeCount, () => daytradeCount);
+    map.putIfAbsent(_keyLastMaintenanceMargin, () => lastMaintenanceMargin);
+    map.putIfAbsent(_keyDayTradingBuyingPower, () => daytradingBuyingPower);
+    map.putIfAbsent(_keyRegtBuyingPower, () => regtBuyingPower);
+    return map;
   }
 
   /// Utility to convert the string to an account status.

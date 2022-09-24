@@ -3,21 +3,21 @@ library alpaca_markets;
 /// The asset object used to hold both equity and crypto
 /// asset data returned from the asset requests.
 class Asset {
-  static const String _jsonKeyId = "id";
-  static const String _jsonKeyClass = "class";
-  static const String _jsonKeyExchange = "exchange";
-  static const String _jsonKeySymbol = "symbol";
-  static const String _jsonKeyName = "name";
-  static const String _jsonKeyStatus = "status";
-  static const String _jsonKeyTradable = "tradable";
-  static const String _jsonKeyMarginable = "marginable";
-  static const String _jsonKeyShortable = "shortable";
-  static const String _jsonKeyEasyToBorrow = "easy_to_borrow";
-  static const String _jsonKeyFractionable = "fractionable";
-  static const String _jsonKeyMinOrderSize = "min_order_size";
-  static const String _jsonKeyMinTradeIncrement = "min_trade_increment";
-  static const String _jsonKeyPriceIncrement = "price_increment";
-  static const String _jsonKeyMaintenanceMarginRequirement =
+  static const String _keyId = "id";
+  static const String _keyClass = "class";
+  static const String _keyExchange = "exchange";
+  static const String _keySymbol = "symbol";
+  static const String _keyName = "name";
+  static const String _keyStatus = "status";
+  static const String _keyTradable = "tradable";
+  static const String _keyMarginable = "marginable";
+  static const String _keyShortable = "shortable";
+  static const String _keyEasyToBorrow = "easy_to_borrow";
+  static const String _keyFractionable = "fractionable";
+  static const String _keyMinOrderSize = "min_order_size";
+  static const String _keyMinTradeIncrement = "min_trade_increment";
+  static const String _keyPriceIncrement = "price_increment";
+  static const String _keyMaintenanceMarginRequirement =
       "maintenance_margin_requirement";
 
   /// Asset ID.
@@ -93,82 +93,81 @@ class Asset {
   }
 
   /// Constructs an asset from the provided map.
-  static Asset? fromMap(Map<String, dynamic> json) {
+  static Asset? fromMap(Map<String, dynamic> map) {
     // Parse the ID
-    if (!json.containsKey(_jsonKeyId)) {
+    if (!map.containsKey(_keyId)) {
       return null;
     }
-    String id = json[_jsonKeyId]!;
+    String id = map[_keyId]!;
     // Parse the class
-    if (!json.containsKey(_jsonKeyClass)) {
+    if (!map.containsKey(_keyClass)) {
       return null;
     }
-    String assetClass = json[_jsonKeyClass]!;
+    String assetClass = map[_keyClass]!;
     // Parse the exchange
-    if (!json.containsKey(_jsonKeyExchange)) {
+    if (!map.containsKey(_keyExchange)) {
       return null;
     }
-    String exchange = json[_jsonKeyExchange]!;
+    String exchange = map[_keyExchange]!;
     // Parse the symbol
-    if (!json.containsKey(_jsonKeySymbol)) {
+    if (!map.containsKey(_keySymbol)) {
       return null;
     }
-    String symbol = json[_jsonKeySymbol]!;
+    String symbol = map[_keySymbol]!;
     // Parse the name
     String name = "";
-    if (json.containsKey(_jsonKeyName)) {
-      name = json[_jsonKeyName]!;
+    if (map.containsKey(_keyName)) {
+      name = map[_keyName]!;
     }
     // Parse the status
     String status = "";
-    if (json.containsKey(_jsonKeyStatus)) {
-      status = json[_jsonKeyStatus]!;
+    if (map.containsKey(_keyStatus)) {
+      status = map[_keyStatus]!;
     }
     // Parse the tradable
     bool tradable = false;
-    if (json.containsKey(_jsonKeyTradable)) {
-      tradable = json[_jsonKeyTradable]!;
+    if (map.containsKey(_keyTradable)) {
+      tradable = map[_keyTradable]!;
     }
     // Parse the marginable
     bool marginable = false;
-    if (json.containsKey(_jsonKeyMarginable)) {
-      marginable = json[_jsonKeyMarginable]!;
+    if (map.containsKey(_keyMarginable)) {
+      marginable = map[_keyMarginable]!;
     }
     // Parse the shortable
     bool shortable = false;
-    if (json.containsKey(_jsonKeyShortable)) {
-      shortable = json[_jsonKeyShortable]!;
+    if (map.containsKey(_keyShortable)) {
+      shortable = map[_keyShortable]!;
     }
     // Parse the easyToBorrow
     bool easyToBorrow = false;
-    if (json.containsKey(_jsonKeyEasyToBorrow)) {
-      easyToBorrow = json[_jsonKeyEasyToBorrow]!;
+    if (map.containsKey(_keyEasyToBorrow)) {
+      easyToBorrow = map[_keyEasyToBorrow]!;
     }
     // Parse the tradable
     bool fractionable = false;
-    if (json.containsKey(_jsonKeyFractionable)) {
-      fractionable = json[_jsonKeyFractionable]!;
+    if (map.containsKey(_keyFractionable)) {
+      fractionable = map[_keyFractionable]!;
     }
     // Parse the minOrderSize
     String? minOrderSize;
-    if (json.containsKey(_jsonKeyMinOrderSize)) {
-      minOrderSize = json[_jsonKeyMinOrderSize]!;
+    if (map.containsKey(_keyMinOrderSize)) {
+      minOrderSize = map[_keyMinOrderSize]!;
     }
     // Parse the minTradeIncrement
     String? minTradeIncrement;
-    if (json.containsKey(_jsonKeyMinTradeIncrement)) {
-      minTradeIncrement = json[_jsonKeyMinTradeIncrement]!;
+    if (map.containsKey(_keyMinTradeIncrement)) {
+      minTradeIncrement = map[_keyMinTradeIncrement]!;
     }
     // Parse the priceIncrement
     String? priceIncrement;
-    if (json.containsKey(_jsonKeyPriceIncrement)) {
-      priceIncrement = json[_jsonKeyPriceIncrement]!;
+    if (map.containsKey(_keyPriceIncrement)) {
+      priceIncrement = map[_keyPriceIncrement]!;
     }
     // Parse the status
     int? maintenanceMarginRequirement;
-    if (json.containsKey(_jsonKeyMaintenanceMarginRequirement)) {
-      maintenanceMarginRequirement =
-          json[_jsonKeyMaintenanceMarginRequirement]!;
+    if (map.containsKey(_keyMaintenanceMarginRequirement)) {
+      maintenanceMarginRequirement = map[_keyMaintenanceMarginRequirement]!;
     }
     // Create the asset
     return Asset(
@@ -191,35 +190,35 @@ class Asset {
 
   /// Creates a map given the current asset data
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> json = {};
-    json.putIfAbsent(_jsonKeyId, () => id);
-    json.putIfAbsent(_jsonKeyClass, () => assetClass);
-    json.putIfAbsent(_jsonKeyExchange, () => exchange);
-    json.putIfAbsent(_jsonKeySymbol, () => symbol);
+    Map<String, dynamic> map = {};
+    map.putIfAbsent(_keyId, () => id);
+    map.putIfAbsent(_keyClass, () => assetClass);
+    map.putIfAbsent(_keyExchange, () => exchange);
+    map.putIfAbsent(_keySymbol, () => symbol);
     if (name.isNotEmpty) {
-      json.putIfAbsent(_jsonKeyName, () => name);
+      map.putIfAbsent(_keyName, () => name);
     }
     if (status.isNotEmpty) {
-      json.putIfAbsent(_jsonKeyStatus, () => status);
+      map.putIfAbsent(_keyStatus, () => status);
     }
-    json.putIfAbsent(_jsonKeyTradable, () => tradable);
-    json.putIfAbsent(_jsonKeyMarginable, () => marginable);
-    json.putIfAbsent(_jsonKeyShortable, () => shortable);
-    json.putIfAbsent(_jsonKeyEasyToBorrow, () => easyToBorrow);
-    json.putIfAbsent(_jsonKeyFractionable, () => fractionable);
+    map.putIfAbsent(_keyTradable, () => tradable);
+    map.putIfAbsent(_keyMarginable, () => marginable);
+    map.putIfAbsent(_keyShortable, () => shortable);
+    map.putIfAbsent(_keyEasyToBorrow, () => easyToBorrow);
+    map.putIfAbsent(_keyFractionable, () => fractionable);
     if (minOrderSize != null) {
-      json.putIfAbsent(_jsonKeyMinOrderSize, () => minOrderSize);
+      map.putIfAbsent(_keyMinOrderSize, () => minOrderSize);
     }
     if (minTradeIncrement != null) {
-      json.putIfAbsent(_jsonKeyMinTradeIncrement, () => minTradeIncrement);
+      map.putIfAbsent(_keyMinTradeIncrement, () => minTradeIncrement);
     }
     if (priceIncrement != null) {
-      json.putIfAbsent(_jsonKeyPriceIncrement, () => priceIncrement);
+      map.putIfAbsent(_keyPriceIncrement, () => priceIncrement);
     }
     if (maintenanceMarginRequirement != null) {
-      json.putIfAbsent(_jsonKeyMaintenanceMarginRequirement,
-          () => maintenanceMarginRequirement);
+      map.putIfAbsent(
+          _keyMaintenanceMarginRequirement, () => maintenanceMarginRequirement);
     }
-    return json;
+    return map;
   }
 }

@@ -3,10 +3,10 @@ library alpaca_markets;
 /// Represents whether the market is open with the current timestamp,
 /// also indicating when the market next opens and closes.
 class Clock {
-  static const String _jsonKeyTimestamp = "timestamp";
-  static const String _jsonKeyIsOpen = "is_open";
-  static const String _jsonKeyNextOpen = "next_open";
-  static const String _jsonKeyNextClose = "next_close";
+  static const String _keyTimestamp = "timestamp";
+  static const String _keyIsOpen = "is_open";
+  static const String _keyNextOpen = "next_open";
+  static const String _keyNextClose = "next_close";
 
   /// The timestamp being described.
   final DateTime timestamp;
@@ -24,12 +24,12 @@ class Clock {
   Clock(this.timestamp, this.isOpen, this.nextOpen, this.nextClose);
 
   /// Constructs a clock from the provided map.
-  static Clock? fromMap(Map<String, dynamic> json) {
+  static Clock? fromMap(Map<String, dynamic> map) {
     try {
-      DateTime timestamp = DateTime.parse(json[_jsonKeyTimestamp]!);
-      bool isOpen = json[_jsonKeyIsOpen]!;
-      DateTime nextOpen = DateTime.parse(json[_jsonKeyNextOpen]!);
-      DateTime nextClose = DateTime.parse(json[_jsonKeyNextClose]!);
+      DateTime timestamp = DateTime.parse(map[_keyTimestamp]!);
+      bool isOpen = map[_keyIsOpen]!;
+      DateTime nextOpen = DateTime.parse(map[_keyNextOpen]!);
+      DateTime nextClose = DateTime.parse(map[_keyNextClose]!);
       return Clock(timestamp, isOpen, nextOpen, nextClose);
     } catch (error) {
       return null;
@@ -38,11 +38,11 @@ class Clock {
 
   /// Creates a map given the current clock data
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> json = {};
-    json.putIfAbsent(_jsonKeyTimestamp, () => timestamp.toUtc().toString());
-    json.putIfAbsent(_jsonKeyIsOpen, () => isOpen);
-    json.putIfAbsent(_jsonKeyNextOpen, () => nextOpen.toUtc().toString());
-    json.putIfAbsent(_jsonKeyNextClose, () => nextClose.toUtc().toString());
-    return json;
+    Map<String, dynamic> map = {};
+    map.putIfAbsent(_keyTimestamp, () => timestamp.toUtc().toString());
+    map.putIfAbsent(_keyIsOpen, () => isOpen);
+    map.putIfAbsent(_keyNextOpen, () => nextOpen.toUtc().toString());
+    map.putIfAbsent(_keyNextClose, () => nextClose.toUtc().toString());
+    return map;
   }
 }
