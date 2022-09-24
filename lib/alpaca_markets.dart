@@ -1,11 +1,13 @@
 library alpaca_markets;
 
+import 'package:alpaca_markets/src/managers/account_configs_manager.dart';
 import 'package:alpaca_markets/src/managers/account_manager.dart';
 import 'package:alpaca_markets/src/managers/asset_manager.dart';
 import 'package:alpaca_markets/src/managers/calendar_manager.dart';
 import 'package:alpaca_markets/src/managers/clock_manager.dart';
 import 'package:alpaca_markets/src/managers/watchlist_manager.dart';
 import 'package:alpaca_markets/src/models/account.dart';
+import 'package:alpaca_markets/src/models/account_configs.dart';
 import 'package:alpaca_markets/src/models/asset.dart';
 import 'package:alpaca_markets/src/models/calendar.dart';
 import 'package:alpaca_markets/src/models/clock.dart';
@@ -13,6 +15,7 @@ import 'package:alpaca_markets/src/models/watchlist.dart';
 import 'package:alpaca_markets/src/request_builder.dart';
 
 export './src/models/account.dart';
+export './src/models/account_configs.dart';
 export './src/models/asset.dart';
 export './src/models/calendar.dart';
 export './src/models/clock.dart';
@@ -183,5 +186,31 @@ class AlpacaMarkets {
   /// Retrieves the market clock for the current date/time.
   Future<Clock?> getMarketClock() async {
     return await ClockManager.getMarketClock(_requestBuilder);
+  }
+
+  /// Retrieves the account configs for the current account.
+  Future<AccountConfigs?> getAccountConfigs() async {
+    return await AccountConfigsManager.getAccountConfigs(_requestBuilder);
+  }
+
+  /// Provides a method of updating account configs with the desired change
+  /// in parameter. See [AccountConfigs] for the possible values for each
+  /// of the parameters.
+  Future<AccountConfigs?> updateAccountConfigs(
+      {String? dtbpCheck,
+      String? tradeConfirmEmail,
+      bool? suspendTrade,
+      bool? noShorting,
+      bool? fractionalTrading,
+      String? maxMarginMultiplier,
+      String? pdtCheck}) async {
+    return await AccountConfigsManager.updateAccountConfigs(_requestBuilder,
+        dtbpCheck: dtbpCheck,
+        tradeConfirmEmail: tradeConfirmEmail,
+        suspendTrade: suspendTrade,
+        noShorting: noShorting,
+        fractionalTrading: fractionalTrading,
+        maxMarginMultiplier: maxMarginMultiplier,
+        pdtCheck: pdtCheck);
   }
 }

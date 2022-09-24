@@ -132,4 +132,22 @@ void main() {
         paperApcaApiSecretKey: getApcaApiSecretKey());
     expect(await am.getMarketClock(), isNot(null));
   });
+
+  test('Evaluate account configs', () async {
+    AlpacaMarkets am = AlpacaMarkets(
+        paperApacApiKeyId: getApcaApiKeyId(),
+        paperApcaApiSecretKey: getApcaApiSecretKey());
+    AccountConfigs? configs = await am.getAccountConfigs();
+    expect(configs, isNot(null));
+    await am.updateAccountConfigs(tradeConfirmEmail: "none");
+    configs = await am.getAccountConfigs();
+    if (configs != null) {
+      expect(configs.tradeConfirmEmail, "none");
+    }
+    await am.updateAccountConfigs(tradeConfirmEmail: "all");
+    configs = await am.getAccountConfigs();
+    if (configs != null) {
+      expect(configs.tradeConfirmEmail, "all");
+    }
+  });
 }

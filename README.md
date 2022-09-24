@@ -34,14 +34,23 @@ AlpacaMarkets am = AlpacaMarkets(
         paperApcaApiSecretKey: "<Insert secret paper key>");
 ```
 
-#### Retrieve account and assets
+#### Retrieve and update account info and assets
 
-Additional parameters for the getAssets() request include asset status, asset class, and exchange filters.
-
-The [Account](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/account.dart) and [Asset](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/asset.dart) classes are available for viewing the fields of data.
+The [Account](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/account.dart) and [AccountConfigs](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/account_configs.dart) classes are available for viewing the fields of data.
 
 ```dart
 Account? account = await am.getAccount();
+AccountConfigs? configs = await am.getAccountConfigs();
+await am.updateAccountConfigs(tradeConfirmEmail: "none");
+```
+
+#### Asset retrieval
+
+Additional parameters for the getAssets() request include asset status, asset class, and exchange filters.
+
+The [Asset](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/asset.dart) class is available for viewing the fields of data.
+
+```dart
 Asset? asset = await am.getAsset("GRMN");
 List<Asset>? assets = await am.getAssets();
 ```

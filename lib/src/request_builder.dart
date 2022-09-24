@@ -91,6 +91,15 @@ class RequestBuilder {
         headers: headers, body: body, encoding: encoding);
   }
 
+  /// Executes a PATCH request and provides the response.
+  Future<http.Response> patch(String endpoint,
+      {Map<String, dynamic>? params, Object? body, Encoding? encoding}) async {
+    Uri url = Uri.https(_getUrl(), endpoint, params);
+    Map<String, String>? headers = buildHeaders();
+    return await http.patch(url,
+        headers: headers, body: body, encoding: encoding);
+  }
+
   /// Builds the default headers for every request.
   Map<String, String>? buildHeaders() {
     Map<String, String>? headers = {
