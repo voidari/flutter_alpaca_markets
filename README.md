@@ -55,6 +55,16 @@ Asset? asset = await am.getAsset("GRMN");
 List<Asset>? assets = await am.getAssets();
 ```
 
+#### Portfolio operations
+
+Additional parameters for the getPortfolioHistory() request can be found in the documentation.
+
+The [PortfolioHistory](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/portfolio_history.dart) class is available for viewing the fields of data.
+
+```dart
+PortfolioHistory? portfolioHistory = await am.getPortfolioHistory();
+```
+
 #### Add, edit, and delete watchlists
 
 A watchlist can be added to an Alpaca account through their web portal, but the APIs can provide multiple watchlists and support them all using the following example.

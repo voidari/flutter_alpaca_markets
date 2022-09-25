@@ -5,12 +5,14 @@ import 'package:alpaca_markets/src/managers/account_manager.dart';
 import 'package:alpaca_markets/src/managers/asset_manager.dart';
 import 'package:alpaca_markets/src/managers/calendar_manager.dart';
 import 'package:alpaca_markets/src/managers/clock_manager.dart';
+import 'package:alpaca_markets/src/managers/portfolio_history_manager.dart';
 import 'package:alpaca_markets/src/managers/watchlist_manager.dart';
 import 'package:alpaca_markets/src/models/account.dart';
 import 'package:alpaca_markets/src/models/account_configs.dart';
 import 'package:alpaca_markets/src/models/asset.dart';
 import 'package:alpaca_markets/src/models/calendar.dart';
 import 'package:alpaca_markets/src/models/clock.dart';
+import 'package:alpaca_markets/src/models/portfolio_history.dart';
 import 'package:alpaca_markets/src/models/watchlist.dart';
 import 'package:alpaca_markets/src/request_builder.dart';
 
@@ -19,7 +21,9 @@ export './src/models/account_configs.dart';
 export './src/models/asset.dart';
 export './src/models/calendar.dart';
 export './src/models/clock.dart';
+export './src/models/portfolio_history.dart';
 export './src/models/watchlist.dart';
+export './src/settings.dart';
 
 /// Provides a means to trade with Alpaca's brokerage service,
 /// allowing access to real-time price, fundamentals, placing orders,
@@ -212,5 +216,33 @@ class AlpacaMarkets {
         fractionalTrading: fractionalTrading,
         maxMarginMultiplier: maxMarginMultiplier,
         pdtCheck: pdtCheck);
+  }
+
+  /// Returns the timeseries data for equity and profit loss information
+  /// of the account. Provide a [periodDay], [periodWeek], [periodMonth], or
+  /// [periodYear] for the duration of data. Defaults to 1 month. Set the
+  /// [timeframe] for the resolution of time window. If omitted, 1Min for less
+  /// than 7 days period, 15Min for less than 30 days, or otherwise 1D.
+  /// Set [dateEnd] as the date the data is returned up to. Defaults to the
+  /// current market date (rolls over at the market open if extended_hours is
+  /// false, otherwise at 7am ET).
+  /// Set the [extendedHours] to true to include extended hours in the result.
+  /// This is effective only for timeframe less than 1D.
+  Future<PortfolioHistory?> getPortfolioHistory(
+      {int? periodDay,
+      int? periodWeek,
+      int? periodMonth,
+      int? periodYear,
+      Timeframe? timeframe,
+      DateTime? dateEnd,
+      bool? extendedHours}) async {
+    return await PortfolioHistoryManager.getPortfolioHistory(_requestBuilder,
+        periodDay: periodDay,
+        periodWeek: periodWeek,
+        periodMonth: periodMonth,
+        periodYear: periodYear,
+        timeframe: timeframe,
+        dateEnd: dateEnd,
+        extendedHours: extendedHours);
   }
 }

@@ -1,5 +1,6 @@
 library alpaca_markets;
 
+import 'package:alpaca_markets/src/settings.dart';
 import 'package:flutter/material.dart';
 
 /// Contains the specific open and close times for the market days, taking into
@@ -24,15 +25,18 @@ class Calendar {
   /// Constructs a calendar from the provided map.
   static Calendar? fromMap(Map<String, dynamic> map) {
     try {
-      DateTime date = DateTime.parse(map[_keyDate]!);
+      DateTime date = DateTime.parse(map[_keyDate]);
       TimeOfDay open = TimeOfDay(
-          hour: int.parse(map[_keyOpen]!.split(":")[0]),
-          minute: int.parse(map[_keyOpen]!.split(":")[1]));
+          hour: int.parse(map[_keyOpen].split(":")[0]),
+          minute: int.parse(map[_keyOpen].split(":")[1]));
       TimeOfDay close = TimeOfDay(
-          hour: int.parse(map[_keyClose]!.split(":")[0]),
-          minute: int.parse(map[_keyClose]!.split(":")[1]));
+          hour: int.parse(map[_keyClose].split(":")[0]),
+          minute: int.parse(map[_keyClose].split(":")[1]));
       return Calendar(date, open, close);
     } catch (error) {
+      if (Settings.debugPrint) {
+        print(error);
+      }
       return null;
     }
   }

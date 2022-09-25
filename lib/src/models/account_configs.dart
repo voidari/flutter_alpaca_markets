@@ -1,5 +1,7 @@
 library alpaca_markets;
 
+import 'package:alpaca_markets/src/settings.dart';
+
 /// provides custom configurations about your trading account settings.
 /// These configurations control allow you to modify settings to suit your
 /// trading needs.
@@ -66,6 +68,9 @@ class AccountConfigs {
       return AccountConfigs(dtbpCheck, tradeConfirmEmail, suspendTrade,
           noShorting, fractionalTrading, maxMarginMultiplier, pdtCheck);
     } catch (error) {
+      if (Settings.debugPrint) {
+        print(error);
+      }
       return null;
     }
   }

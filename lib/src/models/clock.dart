@@ -1,5 +1,7 @@
 library alpaca_markets;
 
+import 'package:alpaca_markets/src/settings.dart';
+
 /// Represents whether the market is open with the current timestamp,
 /// also indicating when the market next opens and closes.
 class Clock {
@@ -26,12 +28,15 @@ class Clock {
   /// Constructs a clock from the provided map.
   static Clock? fromMap(Map<String, dynamic> map) {
     try {
-      DateTime timestamp = DateTime.parse(map[_keyTimestamp]!);
-      bool isOpen = map[_keyIsOpen]!;
-      DateTime nextOpen = DateTime.parse(map[_keyNextOpen]!);
-      DateTime nextClose = DateTime.parse(map[_keyNextClose]!);
+      DateTime timestamp = DateTime.parse(map[_keyTimestamp]);
+      bool isOpen = map[_keyIsOpen];
+      DateTime nextOpen = DateTime.parse(map[_keyNextOpen]);
+      DateTime nextClose = DateTime.parse(map[_keyNextClose]);
       return Clock(timestamp, isOpen, nextOpen, nextClose);
     } catch (error) {
+      if (Settings.debugPrint) {
+        print(error);
+      }
       return null;
     }
   }

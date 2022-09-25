@@ -3,16 +3,18 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:alpaca_markets/alpaca_markets.dart';
 
-void main() {
-  String getApcaApiKeyId() {
-    // Add your paper API key ID
-    return "PKPRO7JXVLKFDZG0Q864";
-  }
+String getApcaApiKeyId() {
+  // Add your paper API key ID
+  return "PKPRO7JXVLKFDZG0Q864";
+}
 
-  String getApcaApiSecretKey() {
-    // Add your paper API secret key
-    return "EyngG12OXYyDLxDmhhxrH2kDVgvFpTITjjgY5ELB";
-  }
+String getApcaApiSecretKey() {
+  // Add your paper API secret key
+  return "EyngG12OXYyDLxDmhhxrH2kDVgvFpTITjjgY5ELB";
+}
+
+void main() {
+  Settings.debugPrint = true;
 
   test('Evaluate account', () async {
     AlpacaMarkets am = AlpacaMarkets(
@@ -149,5 +151,13 @@ void main() {
     if (configs != null) {
       expect(configs.tradeConfirmEmail, "all");
     }
+  });
+
+  test('Evaluate portfolio history', () async {
+    AlpacaMarkets am = AlpacaMarkets(
+        paperApacApiKeyId: getApcaApiKeyId(),
+        paperApcaApiSecretKey: getApcaApiSecretKey());
+    PortfolioHistory? ph = await am.getPortfolioHistory();
+    expect(ph, isNot(null));
   });
 }

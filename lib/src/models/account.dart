@@ -1,5 +1,7 @@
 library alpaca_markets;
 
+import 'package:alpaca_markets/src/settings.dart';
+
 /// The following are the possible account status values. Most likely,
 /// the account status is ACTIVE unless there is any problem. The account
 /// status may get in ACCOUNT_UPDATED when personal information is being
@@ -254,6 +256,9 @@ class Account {
           daytradingBuyingPower,
           regtBuyingPower);
     } catch (error) {
+      if (Settings.debugPrint) {
+        print(error);
+      }
       return null;
     }
   }

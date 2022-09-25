@@ -1,5 +1,7 @@
 library alpaca_markets;
 
+import 'package:alpaca_markets/src/settings.dart';
+
 /// The asset object used to hold both equity and crypto
 /// asset data returned from the asset requests.
 class Asset {
@@ -94,98 +96,105 @@ class Asset {
 
   /// Constructs an asset from the provided map.
   static Asset? fromMap(Map<String, dynamic> map) {
-    // Parse the ID
-    if (!map.containsKey(_keyId)) {
+    try {
+      // Parse the ID
+      if (!map.containsKey(_keyId)) {
+        return null;
+      }
+      String id = map[_keyId]!;
+      // Parse the class
+      if (!map.containsKey(_keyClass)) {
+        return null;
+      }
+      String assetClass = map[_keyClass];
+      // Parse the exchange
+      if (!map.containsKey(_keyExchange)) {
+        return null;
+      }
+      String exchange = map[_keyExchange];
+      // Parse the symbol
+      if (!map.containsKey(_keySymbol)) {
+        return null;
+      }
+      String symbol = map[_keySymbol];
+      // Parse the name
+      String name = "";
+      if (map.containsKey(_keyName)) {
+        name = map[_keyName];
+      }
+      // Parse the status
+      String status = "";
+      if (map.containsKey(_keyStatus)) {
+        status = map[_keyStatus];
+      }
+      // Parse the tradable
+      bool tradable = false;
+      if (map.containsKey(_keyTradable)) {
+        tradable = map[_keyTradable];
+      }
+      // Parse the marginable
+      bool marginable = false;
+      if (map.containsKey(_keyMarginable)) {
+        marginable = map[_keyMarginable];
+      }
+      // Parse the shortable
+      bool shortable = false;
+      if (map.containsKey(_keyShortable)) {
+        shortable = map[_keyShortable];
+      }
+      // Parse the easyToBorrow
+      bool easyToBorrow = false;
+      if (map.containsKey(_keyEasyToBorrow)) {
+        easyToBorrow = map[_keyEasyToBorrow];
+      }
+      // Parse the tradable
+      bool fractionable = false;
+      if (map.containsKey(_keyFractionable)) {
+        fractionable = map[_keyFractionable];
+      }
+      // Parse the minOrderSize
+      String? minOrderSize;
+      if (map.containsKey(_keyMinOrderSize)) {
+        minOrderSize = map[_keyMinOrderSize];
+      }
+      // Parse the minTradeIncrement
+      String? minTradeIncrement;
+      if (map.containsKey(_keyMinTradeIncrement)) {
+        minTradeIncrement = map[_keyMinTradeIncrement];
+      }
+      // Parse the priceIncrement
+      String? priceIncrement;
+      if (map.containsKey(_keyPriceIncrement)) {
+        priceIncrement = map[_keyPriceIncrement];
+      }
+      // Parse the status
+      int? maintenanceMarginRequirement;
+      if (map.containsKey(_keyMaintenanceMarginRequirement)) {
+        maintenanceMarginRequirement = map[_keyMaintenanceMarginRequirement];
+      }
+      // Create the asset
+      return Asset(
+          id,
+          assetClass,
+          exchange,
+          symbol,
+          name,
+          status,
+          tradable,
+          marginable,
+          shortable,
+          easyToBorrow,
+          fractionable,
+          minOrderSize,
+          minTradeIncrement,
+          priceIncrement,
+          maintenanceMarginRequirement);
+    } catch (error) {
+      if (Settings.debugPrint) {
+        print(error);
+      }
       return null;
     }
-    String id = map[_keyId]!;
-    // Parse the class
-    if (!map.containsKey(_keyClass)) {
-      return null;
-    }
-    String assetClass = map[_keyClass]!;
-    // Parse the exchange
-    if (!map.containsKey(_keyExchange)) {
-      return null;
-    }
-    String exchange = map[_keyExchange]!;
-    // Parse the symbol
-    if (!map.containsKey(_keySymbol)) {
-      return null;
-    }
-    String symbol = map[_keySymbol]!;
-    // Parse the name
-    String name = "";
-    if (map.containsKey(_keyName)) {
-      name = map[_keyName]!;
-    }
-    // Parse the status
-    String status = "";
-    if (map.containsKey(_keyStatus)) {
-      status = map[_keyStatus]!;
-    }
-    // Parse the tradable
-    bool tradable = false;
-    if (map.containsKey(_keyTradable)) {
-      tradable = map[_keyTradable]!;
-    }
-    // Parse the marginable
-    bool marginable = false;
-    if (map.containsKey(_keyMarginable)) {
-      marginable = map[_keyMarginable]!;
-    }
-    // Parse the shortable
-    bool shortable = false;
-    if (map.containsKey(_keyShortable)) {
-      shortable = map[_keyShortable]!;
-    }
-    // Parse the easyToBorrow
-    bool easyToBorrow = false;
-    if (map.containsKey(_keyEasyToBorrow)) {
-      easyToBorrow = map[_keyEasyToBorrow]!;
-    }
-    // Parse the tradable
-    bool fractionable = false;
-    if (map.containsKey(_keyFractionable)) {
-      fractionable = map[_keyFractionable]!;
-    }
-    // Parse the minOrderSize
-    String? minOrderSize;
-    if (map.containsKey(_keyMinOrderSize)) {
-      minOrderSize = map[_keyMinOrderSize]!;
-    }
-    // Parse the minTradeIncrement
-    String? minTradeIncrement;
-    if (map.containsKey(_keyMinTradeIncrement)) {
-      minTradeIncrement = map[_keyMinTradeIncrement]!;
-    }
-    // Parse the priceIncrement
-    String? priceIncrement;
-    if (map.containsKey(_keyPriceIncrement)) {
-      priceIncrement = map[_keyPriceIncrement]!;
-    }
-    // Parse the status
-    int? maintenanceMarginRequirement;
-    if (map.containsKey(_keyMaintenanceMarginRequirement)) {
-      maintenanceMarginRequirement = map[_keyMaintenanceMarginRequirement]!;
-    }
-    // Create the asset
-    return Asset(
-        id,
-        assetClass,
-        exchange,
-        symbol,
-        name,
-        status,
-        tradable,
-        marginable,
-        shortable,
-        easyToBorrow,
-        fractionable,
-        minOrderSize,
-        minTradeIncrement,
-        priceIncrement,
-        maintenanceMarginRequirement);
   }
 
   /// Creates a map given the current asset data

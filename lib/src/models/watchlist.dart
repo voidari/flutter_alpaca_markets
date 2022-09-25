@@ -1,6 +1,7 @@
 library alpaca_markets;
 
 import 'package:alpaca_markets/src/models/asset.dart';
+import 'package:alpaca_markets/src/settings.dart';
 
 /// Each watchlist is an ordered list of assets, accessed by the
 /// name or ID of the entitiy.
@@ -37,11 +38,11 @@ class Watchlist {
   /// Constructs a watchlist from the provided map.
   static Watchlist? fromMap(Map<String, dynamic> map) {
     try {
-      String id = map[_keyId]!;
-      DateTime createdAt = DateTime.parse(map[_keyCreatedAt]!);
-      DateTime updatedAt = DateTime.parse(map[_keyUpdatedAt]!);
-      String name = map[_keyName]!;
-      String accountId = map[_keyAccountId]!;
+      String id = map[_keyId];
+      DateTime createdAt = DateTime.parse(map[_keyCreatedAt]);
+      DateTime updatedAt = DateTime.parse(map[_keyUpdatedAt]);
+      String name = map[_keyName];
+      String accountId = map[_keyAccountId];
       List<Asset> assets = <Asset>[];
       if (map.containsKey(_keyAssets)) {
         for (dynamic mapAsset in map[_keyAssets]) {
@@ -53,6 +54,9 @@ class Watchlist {
       }
       return Watchlist(id, createdAt, updatedAt, name, accountId, assets);
     } catch (error) {
+      if (Settings.debugPrint) {
+        print(error);
+      }
       return null;
     }
   }
