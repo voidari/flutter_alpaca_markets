@@ -5,10 +5,12 @@ import 'package:alpaca_markets/src/managers/account_manager.dart';
 import 'package:alpaca_markets/src/managers/asset_manager.dart';
 import 'package:alpaca_markets/src/managers/calendar_manager.dart';
 import 'package:alpaca_markets/src/managers/clock_manager.dart';
+import 'package:alpaca_markets/src/managers/corporate_actions_announcements_manager.dart.dart';
 import 'package:alpaca_markets/src/managers/portfolio_history_manager.dart';
 import 'package:alpaca_markets/src/managers/watchlist_manager.dart';
 import 'package:alpaca_markets/src/models/account.dart';
 import 'package:alpaca_markets/src/models/account_configs.dart';
+import 'package:alpaca_markets/src/models/announcement.dart';
 import 'package:alpaca_markets/src/models/asset.dart';
 import 'package:alpaca_markets/src/models/calendar.dart';
 import 'package:alpaca_markets/src/models/clock.dart';
@@ -18,6 +20,7 @@ import 'package:alpaca_markets/src/request_builder.dart';
 
 export './src/models/account.dart';
 export './src/models/account_configs.dart';
+export './src/models/announcement.dart';
 export './src/models/asset.dart';
 export './src/models/calendar.dart';
 export './src/models/clock.dart';
@@ -244,5 +247,29 @@ class AlpacaMarkets {
         timeframe: timeframe,
         dateEnd: dateEnd,
         extendedHours: extendedHours);
+  }
+
+  /// Returns announcements data given specified search criteria.
+  /// [caTypes] is a comma-delimited list of Dividend, Merger, Spinoff, or Split.
+  /// The start (inclusive) of the date range, [since], when searching corporate
+  /// action announcements.
+  /// The end (inclusive) of the date range, [until], when
+  /// searching corporate action announcements. The date range is limited to
+  /// 90 days.
+  /// The [symbol] of the company initiating the announcement.
+  /// The [cusip] of the company initiating the announcement.
+  /// The [dateType] is declaration_date, ex_date, record_date, or payable_date.
+  Future<List<Announcement>?> getAnnouncements(
+      String caTypes, DateTime since, DateTime until,
+      {String? symbol, String? cusip, String? dateType}) async {
+    return await CorporateActionsAnnouncementsManager.getAnnouncements(
+        _requestBuilder, caTypes, since, until,
+        symbol: symbol, cusip: cusip, dateType: dateType);
+  }
+
+  /// Returns the announcement data matching the [announcementId] provided.
+  Future<Announcement?> getAnnouncement(String announcementId) async {
+    return await CorporateActionsAnnouncementsManager.getAnnouncement(
+        _requestBuilder, announcementId);
   }
 }

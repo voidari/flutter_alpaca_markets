@@ -257,6 +257,7 @@ class Account {
           regtBuyingPower);
     } catch (error) {
       if (Settings.debugPrint) {
+        // ignore: avoid_print
         print(error);
       }
       return null;

@@ -35,6 +35,7 @@ class Clock {
       return Clock(timestamp, isOpen, nextOpen, nextClose);
     } catch (error) {
       if (Settings.debugPrint) {
+        // ignore: avoid_print
         print(error);
       }
       return null;

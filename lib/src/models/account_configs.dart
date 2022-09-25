@@ -69,6 +69,7 @@ class AccountConfigs {
           noShorting, fractionalTrading, maxMarginMultiplier, pdtCheck);
     } catch (error) {
       if (Settings.debugPrint) {
+        // ignore: avoid_print
         print(error);
       }
       return null;

@@ -160,4 +160,17 @@ void main() {
     PortfolioHistory? ph = await am.getPortfolioHistory();
     expect(ph, isNot(null));
   });
+
+  test('Evaluate announcements', () async {
+    AlpacaMarkets am = AlpacaMarkets(
+        paperApacApiKeyId: getApcaApiKeyId(),
+        paperApcaApiSecretKey: getApcaApiSecretKey());
+    List<Announcement>? announcements = await am.getAnnouncements("Dividend",
+        DateTime.now().subtract(const Duration(days: 75)), DateTime.now());
+    expect(announcements, isNot(null));
+    expect(announcements?.isNotEmpty, true);
+    Announcement? announcement = await am.getAnnouncement(announcements![0].id);
+    expect(announcement, isNot(null));
+    expect(announcement?.id, announcements[0].id);
+  });
 }

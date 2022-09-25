@@ -102,6 +102,18 @@ List<Calendar>? calendars = await am.getCalendarDates(
 Clock? clock = await am.getMarketClock();
 ```
 
+#### Announcements
+
+Additional parameters for the getAnnouncements().
+
+The [Announcement](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/announcement.dart) class is available for viewing the fields of data.
+
+```dart
+List<Announcement>? announcements = await am.getAnnouncements("Dividend",
+        DateTime.now().subtract(const Duration(days: 75)), DateTime.now());
+Announcement? announcement = await am.getAnnouncement(id);
+```
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/voidari/flutter_alpaca_markets.svg?style=for-the-badge
