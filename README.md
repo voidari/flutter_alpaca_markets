@@ -1,11 +1,14 @@
 # Alpaca Markets
 
 [![pub package](https://img.shields.io/pub/v/alpaca_markets.svg)](https://pub.dev/packages/alpaca_markets)
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
+
+## Introduction
 
 A wrapper for the Alpaca Markets trading APIs. Provides an easy dart-specific way of working with the broker, trading, and market data requests.
 
@@ -113,6 +116,12 @@ List<Announcement>? announcements = await am.getAnnouncements("Dividend",
         DateTime.now().subtract(const Duration(days: 75)), DateTime.now());
 Announcement? announcement = await am.getAnnouncement(id);
 ```
+
+## Appreciation and Proposals
+
+When we work on a project, any internal library we create that could benefit the community will be made public for free use. Please consider contributing, as work does go into creating and maintaining this library. As always, if something could be improved, please create an issue for it in the project repo and we'll be happy to discuss!
+
+[<img src="img/buymecoffee.png" width="175"/>](https://www.buymeacoffee.com/voidari)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
