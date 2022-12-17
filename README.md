@@ -23,18 +23,20 @@ To use this plugin, add `alpaca_markets` as a [dependency in your pubspec.yaml f
 
 ### Examples
 
-Here are small examples that show you how to use the API. The examples provided do not show all return values, parameters, and even functions that are available. Please review the documentation for additonal information.
+Here are small examples that show you how to use the API. The examples provided do not show all return values, parameters, and even functions that are available. Please review the documentation for additional information.
 
-#### Create an instance
+#### Create a context
 
-Use your generated live and/or paper keys to create an instance for querying.
+Use your generated live and/or paper keys to create a context for querying.
 
 ```dart
-AlpacaMarkets am = AlpacaMarkets(
-        liveApacApiKeyId: "<Insert live key>",
-        liveApcaApiSecretKey: "<Insert secret live key>",
-        paperApacApiKeyId: "<Insert paper key>",
-        paperApcaApiSecretKey: "<Insert secret paper key>");
+import 'package:alpaca_markets/alpaca_markets.dart' as alpaca;
+
+alpaca.Context liveContext = alpaca.createLiveContext(
+        "<Insert live key>", "<Insert live secret key>");
+
+alpaca.Context paperContext = alpaca.createPaperContext(
+        "<Insert paper key>", "<Insert paper secret key>");
 ```
 
 #### Retrieve and update account info and assets
@@ -42,9 +44,9 @@ AlpacaMarkets am = AlpacaMarkets(
 The [Account](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/account.dart) and [AccountConfigs](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/account_configs.dart) classes are available for viewing the fields of data.
 
 ```dart
-Account? account = await am.getAccount();
-AccountConfigs? configs = await am.getAccountConfigs();
-await am.updateAccountConfigs(tradeConfirmEmail: "none");
+alpaca.Account? account = await alpaca.getAccount();
+alpaca.AccountConfigs? configs = await alpaca.getAccountConfigs();
+await alpaca.updateAccountConfigs(tradeConfirmEmail: "none");
 ```
 
 #### Asset retrieval
@@ -54,8 +56,8 @@ Additional parameters for the getAssets() request include asset status, asset cl
 The [Asset](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/asset.dart) class is available for viewing the fields of data.
 
 ```dart
-Asset? asset = await am.getAsset("GRMN");
-List<Asset>? assets = await am.getAssets();
+alpaca.Asset? asset = await alpaca.getAsset("GRMN");
+List<alpaca.Asset>? assets = await alpaca.getAssets();
 ```
 
 #### Portfolio operations
@@ -65,7 +67,7 @@ Additional parameters for the getPortfolioHistory() request can be found in the 
 The [PortfolioHistory](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/portfolio_history.dart) class is available for viewing the fields of data.
 
 ```dart
-PortfolioHistory? portfolioHistory = await am.getPortfolioHistory();
+alpaca.PortfolioHistory? portfolioHistory = await alpaca.getPortfolioHistory();
 ```
 
 #### Add, edit, and delete watchlists
@@ -74,20 +76,20 @@ A watchlist can be added to an Alpaca account through their web portal, but the 
 
 ```dart
 // Create a watchlist
-Watchlist? watchlist = await am.createWatchlist("My Watchlist", symbols: ["AAPL", "GOOG"]);
+alpaca.Watchlist? watchlist = await alpaca.createWatchlist("My Watchlist", symbols: ["AAPL", "GOOG"]);
 // Get the watchlists
-List<Watchlist>? watchlists = await am.getWatchlists(withAssets: false);
-watchlist = await am.getWatchlist(watchlist?.id);
+List<alpaca.Watchlist>? watchlists = await alpaca.getWatchlists(withAssets: false);
+watchlist = await alpaca.getWatchlist(watchlist?.id);
 // Update the watchlist name and symbols
-await am.updateWatchlist(watchlist?.id, name: "My Watchlist Plus", symbols: ["GRMN", "TSLA"]);
+await alpaca.updateWatchlist(watchlist?.id, name: "My Watchlist Plus", symbols: ["GRMN", "TSLA"]);
 // Add a new symbol
-await am.addWatchlistSymbol(watchlist?.id, "GME");
+await alpaca.addWatchlistSymbol(watchlist?.id, "GME");
 // Delete the symbol
-await am.deleteWatchlistSymbol(watchlist?.id, "GME");
+await alpaca.deleteWatchlistSymbol(watchlist?.id, "GME");
 // Delete the watchlist
-await am.deleteWatchlist(watchlist?.id);
+await alpaca.deleteWatchlist(watchlist?.id);
 // Delete all watchlists
-await am.deleteAllWatchlists();
+await alpaca.deleteAllWatchlists();
 ```
 
 #### Calendar and market clock
@@ -97,12 +99,12 @@ The market clock is the current time, whether the market is open, when the marke
 
 ```dart
 /// Retrieve a specific date
-Calendar? calendar = await am.getCalendarDate(const DateTime(2022, 11, 1));
+alpaca.Calendar? calendar = await alpaca.getCalendarDate(const DateTime(2022, 11, 1));
 /// Retrieves a range of dates
-List<Calendar>? calendars = await am.getCalendarDates(
+List<alpaca.Calendar>? calendars = await alpaca.getCalendarDates(
     start: const DateTime(2022, 10, 25), end: const DateTime(2022, 10, 31));
 /// Retrieve the market clock
-Clock? clock = await am.getMarketClock();
+alpaca.Clock? clock = await alpaca.getMarketClock();
 ```
 
 #### Announcements
@@ -112,9 +114,9 @@ Additional parameters for the getAnnouncements().
 The [Announcement](https://github.com/voidari/flutter/blob/main/alpaca_markets/lib/src/announcement.dart) class is available for viewing the fields of data.
 
 ```dart
-List<Announcement>? announcements = await am.getAnnouncements("Dividend",
+List<alpaca.Announcement>? announcements = await alpaca.getAnnouncements("Dividend",
         DateTime.now().subtract(const Duration(days: 75)), DateTime.now());
-Announcement? announcement = await am.getAnnouncement(id);
+alpaca.Announcement? announcement = await alpaca.getAnnouncement(id);
 ```
 
 ## Appreciation and Proposals

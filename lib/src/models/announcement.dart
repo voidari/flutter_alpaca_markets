@@ -148,7 +148,6 @@ class Announcement {
       if (Settings.debugPrint) {
         // ignore: avoid_print
         print(error);
-        print(map);
       }
       return null;
     }

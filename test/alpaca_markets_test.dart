@@ -1,176 +1,179 @@
+import 'dart:io';
+
+import 'package:alpaca_markets/src/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:alpaca_markets/alpaca_markets.dart';
+import 'package:alpaca_markets/alpaca_markets.dart' as alpaca;
+import 'package:tuple/tuple.dart';
 
-String getApcaApiKeyId() {
+alpaca.Context getContext() {
   // Add your paper API key ID
-  return "PKPRO7JXVLKFDZG0Q864";
-}
-
-String getApcaApiSecretKey() {
-  // Add your paper API secret key
-  return "EyngG12OXYyDLxDmhhxrH2kDVgvFpTITjjgY5ELB";
+  String apcaApiKeyId = "PKPRO7JXVLKFDZG0Q864";
+  String apcaApiSecretKey = "EyngG12OXYyDLxDmhhxrH2kDVgvFpTITjjgY5ELB";
+  return alpaca.createPaperContext(apcaApiKeyId, apcaApiSecretKey);
 }
 
 void main() {
   Settings.debugPrint = true;
 
+  alpaca.Context context = getContext();
+
   test('Evaluate account', () async {
-    AlpacaMarkets am = AlpacaMarkets(
-        paperApacApiKeyId: getApcaApiKeyId(),
-        paperApcaApiSecretKey: getApcaApiSecretKey());
-    Account? account = await am.getAccount();
-    expect(account, isNot(null));
-    if (account != null) {
-      expect(account.toMap(), Account.fromMap(account.toMap())?.toMap());
+    Tuple2<int, alpaca.Account?> account = await alpaca.getAccount(context);
+    expect(account.item1, HttpStatus.ok);
+    expect(account.item2, isNot(null));
+    if (account.item2 != null) {
+      expect(account.item2!.toMap(),
+          alpaca.Account.fromMap(account.item2!.toMap())?.toMap());
     }
   });
 
   test('Evaluate assets', () async {
-    AlpacaMarkets am = AlpacaMarkets(
-        paperApacApiKeyId: getApcaApiKeyId(),
-        paperApcaApiSecretKey: getApcaApiSecretKey());
     // Test without any parameters
-    List<Asset>? assets = await am.getAssets();
-    expect(assets, isNot(null));
-    if (assets != null) {
-      expect(assets.isNotEmpty, true);
+    Tuple2<int, List<alpaca.Asset>?> assets = await alpaca.getAssets(context);
+    expect(assets.item1, HttpStatus.ok);
+    expect(assets.item2, isNot(null));
+    if (assets.item2 != null) {
+      expect(assets.item2!.isNotEmpty, true);
     }
     // Test with parameters
-    assets = await am.getAssets(status: "active", exchange: "NYSE");
-    expect(assets, isNot(null));
-    if (assets != null) {
-      for (Asset asset in assets) {
+    assets =
+        await alpaca.getAssets(context, status: "active", exchange: "NYSE");
+    expect(assets.item1, HttpStatus.ok);
+    expect(assets.item2, isNot(null));
+    if (assets.item2 != null) {
+      for (alpaca.Asset asset in assets.item2!) {
         expect(asset.status, "active");
         expect(asset.exchange, "NYSE");
       }
     }
 
-    Asset? asset = await am.getAsset("GRMN");
-    expect(asset, isNot(null));
-    if (asset != null) {
-      expect(asset.name, "Garmin Ltd");
+    Tuple2<int, alpaca.Asset?> asset = await alpaca.getAsset(context, "GRMN");
+    expect(assets.item1, HttpStatus.ok);
+    expect(asset.item2, isNot(null));
+    if (asset.item2 != null) {
+      expect(asset.item2!.name, "Garmin Ltd");
     }
   });
 
   test('Evaluate watchlists', () async {
-    AlpacaMarkets am = AlpacaMarkets(
-        paperApacApiKeyId: getApcaApiKeyId(),
-        paperApcaApiSecretKey: getApcaApiSecretKey());
     // Perform a delete prior to testing.
-    await am.deleteAllWatchlists();
+    await alpaca.deleteAllWatchlists(context);
     // Retrieve an empty list
-    List<Watchlist>? watchlists = await am.getWatchlists();
-    expect(watchlists, isNot(null));
-    expect(watchlists?.length, 0);
+    Tuple2<int, List<alpaca.Watchlist>?> watchlists =
+        await alpaca.getWatchlists(context, false);
+    expect(watchlists.item1, HttpStatus.ok);
+    expect(watchlists.item2, isNot(null));
+    expect(watchlists.item2?.length, 0);
     // Create a watchlist
     List<String> symbols = ["GRMN", "AAPL", "TSLA"];
-    Watchlist? watchlist =
-        await am.createWatchlist("FlutterTester", symbols: symbols);
-    expect(watchlist, isNot(null));
-    if (watchlist == null) {
+    Tuple2<int, alpaca.Watchlist?> watchlist = await alpaca
+        .createWatchlist(context, "FlutterTester", symbols: symbols);
+    expect(watchlist.item1, HttpStatus.ok);
+    expect(watchlist.item2, isNot(null));
+    if (watchlist.item2 == null) {
       return;
     }
     // Retrieve the watchlist
-    watchlists = await am.getWatchlists(withAssets: true);
-    expect(watchlists, isNot(null));
-    if (watchlists == null) {
+    watchlists = await alpaca.getWatchlists(context, true);
+    expect(watchlists.item1, HttpStatus.ok);
+    expect(watchlists.item2, isNot(null));
+    if (watchlists.item2 == null) {
       return;
     }
-    expect(watchlists.length, 1);
-    expect(watchlist.name, watchlists[0].name);
-    expect(watchlists[0].assets.length, symbols.length);
-    for (Asset asset in watchlists[0].assets) {
+    expect(watchlists.item2!.length, 1);
+    expect(watchlist.item2!.name, watchlists.item2![0].name);
+    expect(watchlists.item2![0].assets.length, symbols.length);
+    for (alpaca.Asset asset in watchlists.item2![0].assets) {
       expect(symbols.contains(asset.symbol), true);
     }
     // Delete one of the symbols
-    await am.deleteWatchlistSymbol(watchlist.id, "TSLA");
-    watchlist = await am.getWatchlist(watchlist.id);
-    expect(watchlist, isNot(null));
-    expect(watchlist?.assets.length, 2);
+    await alpaca.deleteWatchlistSymbol(context, watchlist.item2!.id, "TSLA");
+    watchlist = await alpaca.getWatchlist(context, watchlist.item2!.id);
+    expect(watchlist.item1, HttpStatus.ok);
+    expect(watchlist.item2, isNot(null));
+    expect(watchlist.item2?.assets.length, 2);
     // Update the list with a new name and the symbols list
-    await am.updateWatchlist(watchlist!.id,
+    await alpaca.updateWatchlist(context, watchlist.item2!.id,
         name: "FlutterTesterPlus", symbols: ["GOOGL"]);
-    watchlist = await am.getWatchlist(watchlist.id);
-    expect(watchlist, isNot(null));
-    expect(watchlist?.name, "FlutterTesterPlus");
-    expect(watchlist?.assets.length, 1);
+    watchlist = await alpaca.getWatchlist(context, watchlist.item2!.id);
+    expect(watchlist.item1, HttpStatus.ok);
+    expect(watchlist.item2, isNot(null));
+    expect(watchlist.item2?.name, "FlutterTesterPlus");
+    expect(watchlist.item2?.assets.length, 1);
     // Add an asset to the watchlist and confirm the symbols
-    await am.addWatchlistSymbol(watchlist!.id, "GRMN");
-    watchlist = await am.getWatchlist(watchlist.id);
-    expect(watchlist, isNot(null));
-    expect(watchlist?.assets.length, 2);
+    await alpaca.addWatchlistSymbol(context, watchlist.item2!.id, "GRMN");
+    watchlist = await alpaca.getWatchlist(context, watchlist.item2!.id);
+    expect(watchlist.item1, HttpStatus.ok);
+    expect(watchlist.item2, isNot(null));
+    expect(watchlist.item2!.assets.length, 2);
     expect(
-        watchlist?.assets[0].symbol == "GRMN" ||
-            watchlist?.assets[1].symbol == "GRMN",
+        watchlist.item2?.assets[0].symbol == "GRMN" ||
+            watchlist.item2?.assets[1].symbol == "GRMN",
         true);
   });
 
   test('Evaluate calendar', () async {
-    AlpacaMarkets am = AlpacaMarkets(
-        paperApacApiKeyId: getApcaApiKeyId(),
-        paperApcaApiSecretKey: getApcaApiSecretKey());
     DateTime dateTime = DateTime(2022, 9, 16);
     // Perform request for a single date
-    Calendar? calendar = await am.getCalendarDate(dateTime);
-    expect(calendar, isNot(null));
-    if (calendar != null) {
-      expect(calendar.date.year, dateTime.year);
-      expect(calendar.date.month, dateTime.month);
-      expect(calendar.date.day, dateTime.day);
-      expect(calendar.open, const TimeOfDay(hour: 9, minute: 30));
-      expect(calendar.close, const TimeOfDay(hour: 16, minute: 0));
+    Tuple2<int, alpaca.Calendar?> calendar =
+        await alpaca.getCalendarDate(context, dateTime);
+    expect(calendar.item1, HttpStatus.ok);
+    expect(calendar.item2, isNot(null));
+    if (calendar.item2 != null) {
+      expect(calendar.item2!.date.year, dateTime.year);
+      expect(calendar.item2!.date.month, dateTime.month);
+      expect(calendar.item2!.date.day, dateTime.day);
+      expect(calendar.item2!.open, const TimeOfDay(hour: 9, minute: 30));
+      expect(calendar.item2!.close, const TimeOfDay(hour: 16, minute: 0));
     }
     // Perform a request for a date range
-    List<Calendar>? calendars = await am.getCalendarDates(
-        start: dateTime.subtract(const Duration(days: 6)), end: dateTime);
-    expect(calendars?.length, 5);
+    Tuple2<int, List<alpaca.Calendar>?> calendars =
+        await alpaca.getCalendarDates(context,
+            start: dateTime.subtract(const Duration(days: 6)), end: dateTime);
+    expect(calendars.item2?.length, 5);
   });
 
   test('Evaluate clock', () async {
-    AlpacaMarkets am = AlpacaMarkets(
-        paperApacApiKeyId: getApcaApiKeyId(),
-        paperApcaApiSecretKey: getApcaApiSecretKey());
-    expect(await am.getMarketClock(), isNot(null));
+    expect((await alpaca.getMarketClock(context)).item2, isNot(null));
   });
 
   test('Evaluate account configs', () async {
-    AlpacaMarkets am = AlpacaMarkets(
-        paperApacApiKeyId: getApcaApiKeyId(),
-        paperApcaApiSecretKey: getApcaApiSecretKey());
-    AccountConfigs? configs = await am.getAccountConfigs();
+    Tuple2<int, alpaca.AccountConfigs?> configs =
+        await alpaca.getAccountConfigs(context);
+    expect(configs.item1, HttpStatus.ok);
     expect(configs, isNot(null));
-    await am.updateAccountConfigs(tradeConfirmEmail: "none");
-    configs = await am.getAccountConfigs();
-    if (configs != null) {
-      expect(configs.tradeConfirmEmail, "none");
+    await alpaca.updateAccountConfigs(context, tradeConfirmEmail: "none");
+    configs = await alpaca.getAccountConfigs(context);
+    if (configs.item2 != null) {
+      expect(configs.item2!.tradeConfirmEmail, "none");
     }
-    await am.updateAccountConfigs(tradeConfirmEmail: "all");
-    configs = await am.getAccountConfigs();
-    if (configs != null) {
-      expect(configs.tradeConfirmEmail, "all");
+    await alpaca.updateAccountConfigs(context, tradeConfirmEmail: "all");
+    configs = await alpaca.getAccountConfigs(context);
+    if (configs.item2 != null) {
+      expect(configs.item2!.tradeConfirmEmail, "all");
     }
   });
 
   test('Evaluate portfolio history', () async {
-    AlpacaMarkets am = AlpacaMarkets(
-        paperApacApiKeyId: getApcaApiKeyId(),
-        paperApcaApiSecretKey: getApcaApiSecretKey());
-    PortfolioHistory? ph = await am.getPortfolioHistory();
-    expect(ph, isNot(null));
+    Tuple2<int, alpaca.PortfolioHistory?> ph =
+        await alpaca.getPortfolioHistory(context);
+    expect(ph.item1, HttpStatus.ok);
+    expect(ph.item2, isNot(null));
   });
 
   test('Evaluate announcements', () async {
-    AlpacaMarkets am = AlpacaMarkets(
-        paperApacApiKeyId: getApcaApiKeyId(),
-        paperApcaApiSecretKey: getApcaApiSecretKey());
-    List<Announcement>? announcements = await am.getAnnouncements("Dividend",
-        DateTime.now().subtract(const Duration(days: 75)), DateTime.now());
-    expect(announcements, isNot(null));
-    expect(announcements?.isNotEmpty, true);
-    Announcement? announcement = await am.getAnnouncement(announcements![0].id);
-    expect(announcement, isNot(null));
-    expect(announcement?.id, announcements[0].id);
+    Tuple2<int, List<alpaca.Announcement>?> announcements =
+        await alpaca.getCorporateActionsAnnouncements(context, "Dividend",
+            DateTime.now().subtract(const Duration(days: 75)), DateTime.now());
+    expect(announcements.item1, HttpStatus.ok);
+    expect(announcements.item2, isNot(null));
+    expect(announcements.item2?.isNotEmpty, true);
+    Tuple2<int, alpaca.Announcement?> announcement = await alpaca
+        .getCorporateActionsAnnouncement(context, announcements.item2![0].id);
+    expect(announcement.item1, HttpStatus.ok);
+    expect(announcement.item2, isNot(null));
+    expect(announcement.item2?.id, announcements.item2![0].id);
   });
 }
