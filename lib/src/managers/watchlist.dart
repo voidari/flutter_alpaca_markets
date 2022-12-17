@@ -1,3 +1,4 @@
+// Copyright (C) 2022 by Voidari LLC or its subsidiaries.
 library alpaca_markets;
 
 /// Used for all watchlist related requests and parsing.

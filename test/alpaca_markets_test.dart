@@ -1,3 +1,5 @@
+// Copyright (C) 2022 by Voidari LLC or its subsidiaries.
+
 import 'dart:io';
 
 import 'package:alpaca_markets/src/settings.dart';

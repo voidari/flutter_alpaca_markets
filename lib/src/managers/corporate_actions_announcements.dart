@@ -1,3 +1,4 @@
+// Copyright (C) 2022 by Voidari LLC or its subsidiaries.
 library alpaca_markets;
 
 /// Announcement data is made available through the API as soon as it is
